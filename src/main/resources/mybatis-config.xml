@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--
+        properties主要用于配置一些可读的属性，可以是静态的吗，也可以读取外部的配置文件中值
+        然后其中的属性就可以在整个配置文件中被用来替换需要动态配置的属性值
+        javaconfig的可以用Properties来替换
+        -->
+    <properties>
+        <property name="userName" value="root"></property>
+        <property name="password" value="123"></property>
+        <property name="url" value="${jdbc.url}"></property>
+    </properties>
+
+    <!--
+        用于设置mybatis的属性
+    -->
+    <settings>
+        <!--是否开启缓存 默认值为true-->
+        <setting name="cacheEnabled" value="true"/>
+        <!--mapUnderscoreToCamelCase 是否开启驼峰映射 默认false-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--
+            autoMappingBehavior属性
+            NONE 表示取消自动映射；PARTIAL 只会自动映射没有定义嵌套结果集映射的结果集。 FULL 会自动映射任意复杂的结果集（无论是否嵌套） 默认值 PARTIAL
+        -->
+        <setting name="autoMappingBehavior" value="FULL"/>
+        <!--lazyLoadingEnabled 是否开启延迟加载 默认值false-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--defaultExecutorType 默认的处理器的类型
+            SIMPLE 就是普通的执行器；REUSE 执行器会重用预处理语句（prepared statements）； BATCH 执行器将重用语句并执行批量更新
+            -->
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+
+        <!--defaultStatementTimeout 用于设置默认的数据库响应的超时时间-->
+        <setting name="defaultStatementTimeout" value="200"/>
+
+    </settings>
+    <!--
+        用于设置别名，可以设置类，还可以设置包
+    -->
+    <typeAliases>
+        <!--对于某个类设置别名 可以使用@Alias注解-->
+        <typeAlias type="com.young.ssm.intercept.I18nLanguageIntercept" alias="i18nLanguageIntercept"></typeAlias>
+        <!--对于包下的所有的类设置别名-->
+        <package name="com.young.ssm.entity"></package>
+    </typeAliases>
+
+    <!--
+        类型处理器 可以自定义类型处理器  继承extends BaseTypeHandler<?>
+        @MappedJdbcTypes(JdbcType.VARCHAR) 表示映射数据库的那种类型
+    -->
+    <typeHandlers>
+        <typeHandler handler=""></typeHandler>
+    </typeHandlers>
+
+    <!--对象工厂-->
+    <objectFactory type=""></objectFactory>
+
+    <!--插件的处理-->
+    <plugins>
+        <plugin interceptor=""></plugin>
+    </plugins>
+
+    <!--环境配置-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--数据库的提供标识-->
+    <databaseIdProvider type="DB_VENDOR"></databaseIdProvider>
+
+    <!--映射的文件-->
+    <mappers>
+        <mapper resource="org/mybatis/example/BlogMapper.xml"/>
+    </mappers>
+</configuration>
