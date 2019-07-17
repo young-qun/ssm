@@ -53,11 +53,11 @@
         @MappedJdbcTypes(JdbcType.VARCHAR) 表示映射数据库的那种类型
     -->
     <typeHandlers>
-        <typeHandler handler=""></typeHandler>
+        <typeHandler handler="com.young.ssm.typehandler.DemoTypeHandler"></typeHandler>
     </typeHandlers>
 
     <!--对象工厂-->
-    <objectFactory type=""></objectFactory>
+    <objectFactory type="com.young.ssm.factory.DemoObjectFactory"></objectFactory>
 
     <!--插件的处理-->
     <plugins>

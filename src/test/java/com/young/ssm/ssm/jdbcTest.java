@@ -1,7 +1,15 @@
 package com.young.ssm.ssm;
 
+import org.apache.ibatis.executor.result.DefaultResultHandler;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -31,5 +39,20 @@ public class jdbcTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void test2(){
+        try {
+            InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+            SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+            SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);
+            SqlSession sqlSession = sqlSessionFactory.openSession(false);
+            sqlSession.select("",new  DefaultResultHandler());
+            sqlSession.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
