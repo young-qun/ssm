@@ -1,5 +1,8 @@
 package com.young.ssm.ssm;
 
+import com.github.pagehelper.PageHelper;
+import com.young.ssm.dao.UserDao;
+import com.young.ssm.entity.User;
 import org.apache.ibatis.executor.result.DefaultResultHandler;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.Configuration;
@@ -48,6 +51,10 @@ public class jdbcTest {
             SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
             SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);
             SqlSession sqlSession = sqlSessionFactory.openSession(false);
+            //使用分也助手
+            PageHelper pageHelper = new PageHelper();
+            UserDao userDao = sqlSession.getMapper(UserDao.class);
+            userDao.selectUserAndDepart(1l,1);
             sqlSession.select("",new  DefaultResultHandler());
             sqlSession.close();
         } catch (IOException e) {

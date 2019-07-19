@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.young.ssm.entity.User" >
+    <!--开启缓存-->
+    <cache />
+    <!--自定义缓存 二级缓存-->
+    <cache-ref namespace=""/>
+    <!--sql标签为 可被复用的sql语句-->
+    <sql id="queryColumn">"name,id,age"</sql>
+    <!--插入语句-->
+    <insert id="insertOne" keyColumn="" useGeneratedKeys="true" statementType="PREPARED"  >insert into tb_xa_user (id,username,age) values(1,2,3);</insert>
+    <!--更新语句-->
+    <update id="updateOne">UPDATE tb_xa_user set name='22' where id= 1;</update>
+    <!--删除语句-->
+    <delete id="deleteOne">DELETE   from tb_xa_user where id = 1;</delete>
+    <!--查询语句最复杂的-->
+    <select id="" resultType="" ></select>
+
+    <!--最为强大的功能 resultMap-->
+    <resultMap id="" type="com.young.ssm.entity.User" autoMapping="true"  >
+        <constructor></constructor>
+        <association property=""></association>
+        <collection property="">
+            <association property=""></association>
+        </collection>
+    </resultMap>
+</mapper>

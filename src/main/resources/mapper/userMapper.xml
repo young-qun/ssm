@@ -1,25 +1,44 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.young.ssm.entity.User" >
-    <!--sql标签为 可被复用的sql语句-->
-    <sql id="queryColumn">"name,id,age"</sql>
-    <!--插入语句-->
-    <insert id="insertOne" >insert into tb_xa_user (id,username,age) values(1,2,3);</insert>
-    <!--更新语句-->
-    <update id="updateOne">UPDATE tb_xa_user set name='22' where id= 1;</update>
-    <!--删除语句-->
-    <delete id="deleteOne">DELETE   from tb_xa_user where id = 1;</delete>
-    <!--查询语句最复杂的-->
-    <select id="" resultType="" ></select>
+<!--namespace 对应的是类的全路径-->
+<mapper namespace="com.young.ssm.dao.UserDao" >
+    <!--不需要开启缓存-->
+    <!--<cache/>-->
+    <!--自定义缓存 缓存用于数据变化不大的情况-->
+    <cache-ref namespace="com.young.ssm.cache.customerCache"/>
 
-    <!--最为强大的功能 resultMap-->
-    <resultMap id="" type="" >
-        <constructor></constructor>
-        <association property=""></association>
-        <collection property="">
-            <association property=""></association>
+    <!--新增。更新 删除一条数据 要刷新缓存-->
+    <!---->
+    <!--插入一条数据-->
+    <insert id="inertOne" statementType="PREPARED" useGeneratedKeys="true"  keyProperty="id" flushCache="true" parameterType="com.young.ssm.entity.User">INSERT  INTO User VALUE #{user}</insert>
+    <!--更新一条数据-->
+    <update id="updateOne" flushCache="true" statementType="PREPARED" useGeneratedKeys="true" keyProperty="id" >UPDATE  tb_xa_user set name = #{name} where id = #{id}</update>
+    <!--删除一条数据-->
+    <delete id="deleteOne" flushCache="true" >DELETE  from tb_xa_user where id= #{id}</delete>
+
+    <!--resultMap用于复杂的映射关系-->
+    <resultMap id="UserAndDepartment" type="com.young.ssm.entity.User" autoMapping="true">
+        <constructor>
+            <arg column="id" javaType="Long"></arg>
+            <arg column="userName" jdbcType="varchar"></arg>
+        </constructor>
+        <id column="id" javaType="Long" jdbcType="bigint"></id>
+        <association property="userDepartment" javaType="com.young.ssm.entity.UserDepartment" column="user_id">
+            <id column="id" javaType="Long"></id>
+            <association property="department">
+                <id column="id" javaType="Long"></id>
+            </association>
+        </association>
+        <collection property="roleList">
+            <id column="id"></id>
         </collection>
     </resultMap>
+    <!--查询数据-->
+    <!--
+        查询出用户和用户所对应的部门
+    -->
+    <select id="selectUserAndDepart" resultMap="UserAndDepartment" > SELECT  * from tb_xa_user u left join tb_xa_user_department ud on u.id = ud.userId left join tb_xa_department d on d.id = ud.department_id where u.id = #{id} and u.status = #{status}</select>
+
+
 </mapper>
