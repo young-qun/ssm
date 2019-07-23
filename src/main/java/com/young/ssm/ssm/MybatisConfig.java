@@ -5,6 +5,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.entity.Config;
+import tk.mybatis.mapper.mapperhelper.MapperHelper;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,5 +43,20 @@ public class MybatisConfig {
     public SqlSession getSqlSession(SqlSessionFactory sqlSessionFactory){
         SqlSession sqlSession = sqlSessionFactory.openSession(false);
         return sqlSession;
+    }
+
+
+    //对于通用Mapper的配置
+    @Bean
+    public void getMapperHelper(SqlSession sqlSession){
+        MapperHelper mapperHelper = new MapperHelper();
+        Config config = new Config();
+        /**
+         * 这个是用于对config的属性的设置
+         */
+//        config.setXXX()
+        mapperHelper.setConfig(config);
+        mapperHelper.registerMapper(Mapper.class);
+        mapperHelper.processConfiguration(sqlSession.getConfiguration());
     }
 }

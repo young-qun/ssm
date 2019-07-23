@@ -62,7 +62,12 @@
     <!--插件的处理-->
     <!--pageHelper 分页助手是一款分页插件-->
     <plugins>
-        <plugin interceptor="com.github.pagehelper.PageHelper"></plugin>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!--指定数据库方言-->
+            <property name="dialect" value="mysql"/>
+            <!--合理化查询-->
+            <property name="reasonable" value="true"/>
+        </plugin>
     </plugins>
 
     <!--环境配置-->
