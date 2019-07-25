@@ -1,5 +1,6 @@
 package com.young.ssm.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,8 @@ import java.util.List;
  * @Date: 2019/7/17 17:21
  * @Description:
  */
-public class User extends BaseEntity {
+public class User extends BaseEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String username;
     private String firstName;
     private String lastName;

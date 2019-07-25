@@ -1,5 +1,9 @@
 package com.young.ssm.entity;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -7,10 +11,12 @@ import java.io.Serializable;
  * @Date: 2019/7/18 09:54
  * @Description: 所有实体类的 基础类
  */
-public class BaseEntity {
+public class BaseEntity  {
     /**
      * 主键Id
      */
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
     /**
@@ -37,10 +43,12 @@ public class BaseEntity {
     /**
      * version 版本号 用于数据库的乐观锁
      */
+    @Column(length = 11 , columnDefinition = "0")
     private Integer version;
     /**
      * 数据是否有效的状态 1有效 0 无效
      */
+    @Column(length = 11 , columnDefinition = "0")
     private Integer status;
 
     /**
@@ -133,6 +141,10 @@ public class BaseEntity {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public void setBeforeInsert(){
+
     }
 
 }
